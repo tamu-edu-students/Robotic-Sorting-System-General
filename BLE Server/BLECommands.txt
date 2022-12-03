@@ -1,0 +1,18 @@
+power on
+menu advertise
+manufacturer 0xffff 0x12 0x34
+name RoboticSortingSystemTest
+back
+menu gatt
+register-service e2d36f99-8909-4136-9a49-d825508b297b	// RSS service
+yes
+register-characteristic 0x1234 read 		// Weight sensor readout
+0
+register-characteristic 0x5678 read,write 	// Sort configuration
+010
+register-application
+back
+menu advertise
+uuids e2d36f99-8909-4136-9a49-d825508b297b	// Makes the service visible
+back
+advertise on
