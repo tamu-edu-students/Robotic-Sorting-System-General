@@ -1,0 +1,5 @@
+- I spent this lab working on reading/writing more than one byte to/from the Raspberry Pi from the Android application.
+- While I wasn't able to solve the issue, I was able to make progress on the source of the issue.
+- The framework underlying the Raspberry Pi's Bluetooth server uses arrays of bytes. 
+- By converting written values into arrays of bytes and read byte arrays into integers, I can effectively read/write more bytes.
+- I'll be working on implementing this at home over the next week.
