@@ -78,11 +78,11 @@ class ConfigurationWriteCharacteristic(Characteristic):
 
     def __init__(self, bus, index, service):
         Characteristic.__init__(
-            self, bus, index, self.uuid, ["encrypt-read", "encrypt-write"], service,
+            self, bus, index, self.uuid, ["read", "write"], service,
         )
 
         # Initial value
-        self.value = [12]  # needs to be in an iterable list to work properly with d-bus
+        self.value = dbus.Array([2, 2], signature='ay')  # ay specifies an array of bytes
 
     # Handle read
     def ReadValue(self, options):
@@ -91,7 +91,7 @@ class ConfigurationWriteCharacteristic(Characteristic):
 
     # Handle write (can add input checking here)
     def WriteValue(self, value, options):
-        writeval = dbus.Array(value, signature='t')  # Theoretically, t signature allows the use of 64-bit unsigned ints: seems to be limited to a byte
+        writeval = dbus.Array(value, signature='ay')
         logger.debug("Writing configuration as: " + repr(writeval))
         self.value = writeval
 
@@ -101,11 +101,11 @@ class WeightSensorReadCharacteristic(Characteristic):
 
     def __init__(self, bus, index, service):
         Characteristic.__init__(
-            self, bus, index, self.uuid, ["encrypt-read"], service,  # Note that this is read-only
+            self, bus, index, self.uuid, ["read"], service,  # Note that this is read-only
         )
 
         # Initial value
-        self.value = [5678]
+        self.value = [100]
 
     # Handle read
     def ReadValue(self, options):

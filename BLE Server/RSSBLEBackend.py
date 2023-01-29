@@ -240,7 +240,7 @@ class Characteristic(dbus.service.Object):
 
     @dbus.service.method(GATT_CHRC_IFACE,
                         in_signature='a{sv}',
-                        out_signature='at')  # t for unsigned 64-bit int
+                        out_signature='ay')  # t for unsigned 64-bit int
     def ReadValue(self, options):
         print('Default ReadValue called, returning error')
         raise NotSupportedException()
