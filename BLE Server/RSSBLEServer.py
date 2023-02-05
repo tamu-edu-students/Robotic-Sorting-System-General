@@ -82,7 +82,7 @@ class ConfigurationWriteCharacteristic(Characteristic):
         )
 
         # Initial value
-        self.value = dbus.Array([2, 2], signature='ay')  # ay specifies an array of bytes
+        self.value = dbus.Array([2, 2, 3, 1], signature='ay')  # ay specifies an array of bytes
 
     # Handle read
     def ReadValue(self, options):
@@ -105,7 +105,7 @@ class WeightSensorReadCharacteristic(Characteristic):
         )
 
         # Initial value
-        self.value = [100]
+        self.value = [100, 100]
 
     # Handle read
     def ReadValue(self, options):
