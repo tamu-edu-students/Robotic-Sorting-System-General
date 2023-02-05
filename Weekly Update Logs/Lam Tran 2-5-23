@@ -1,0 +1,21 @@
+2/5
+Previous week, I worked on the Raspberry Pi to integrate color and size sensor code.
+I finished coding the color and size sensor code to the Raspberry Pi.
+I coded a python program that can take an image from the Raspberry Pi Camera, (without creating errors or other problems)
+I did some testing with the color and size sensor. These include testing with different camera heights to minimize distortions and adjusting lighting to prevent noises.
+It seems that the best height for the Raspberry Pi Camera is 15 inches.
+
+I also worked on my weight sensor to reduce noise.
+I changed my weight sensor code, so that the program averages the last 12 readings.
+I changed my weight sensor code, so that it could take the reading from different 2 load cells. 
+I did some testing with the weight sensor. 
+These include adding a capacitor to see if noise from the reading will reduce, and also averaging the last 12 readings to see if it gives a stable averaged reading.  
+
+My team and I scheduled with our sponsor to clarify the requirements of the Robotic Sorting System. 
+One takeaway from that meeting is implementing machine learning to detect scarrings on the fruit, which wasn't originally part of the design back in ECEN 403.
+
+My personal plan is to update my FSR, ICD, and other documents. 
+I also plan on going to office hours to talk about if I should implement machine learning to my subsystem,  and if I have time to implement it. 
+I am currenting taking ECEN 289 which is a machine learning class, so I will talk to my professor about it. 
+I also plan to test my color/size sensor with objects of different colors and sizes.
+I also plan to test my weight sensor with 2 load cell reading.
