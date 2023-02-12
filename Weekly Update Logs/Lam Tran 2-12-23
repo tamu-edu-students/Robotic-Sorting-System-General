@@ -1,0 +1,19 @@
+2/12
+
+Previous week, I worked on the Raspberry Pi.
+Pace and I tried to find the dimension of the surface area of the image taken from the camera. This dimension is used for the modeling of the conveyor belt system.
+Joseph and I tried to see if the Bluetooth connection works with the app and the Raspberry Pi.
+I did some testing with my color sensor with colored printed squares. Some of the results were goods, and some were way off. I need to make better test items.
+I went to the FEDC to get some plywood and shape them to different dimensions.
+I painted the plywood shape with different colors.
+
+I also did some research on using machine learning.
+I talked to Dr. Lusher and my ECEN 289 professor to get some guidance on creating a ML model to detect good fruit from the bad ones.
+I did look up some dataset websites to find datasets. I found a lemon dataset on Kaggle.
+I did look up some ML libraries for Python. I might use TensorFlow.
+I updated the ghatt chart and the validation plan to include the ML model.
+
+My personal plan is to test my color/size sensors with the new test items.
+I will also test my weight sensor to see if it could handle 3 load cells. 
+After that, I am done with my subsystem from 403, and with work with my other teammates to integrate our subsystems. 
+I will also find more datasets, set up an ML environment, and start learning how to use TensorFlow. 
