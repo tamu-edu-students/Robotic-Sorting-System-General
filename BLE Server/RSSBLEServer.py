@@ -105,7 +105,7 @@ class WeightSensorReadCharacteristic(Characteristic):
         )
 
         # Initial value
-        self.value = [100, 100]
+        self.value = [100, 100, 122]
 
     # Handle read
     def ReadValue(self, options):
