@@ -3,6 +3,8 @@ import dbus.exceptions
 import dbus.mainloop.glib
 import dbus.service
 import logging
+import sensor_output # this is where the sensors and control systems put their output
+import time
 
 # Import classes from backend
 from RSSBLEBackend import (
@@ -82,7 +84,7 @@ class ConfigurationWriteCharacteristic(Characteristic):
         )
 
         # Initial value
-        self.value = dbus.Array([2, 2, 3, 1], signature='ay')  # ay specifies an array of bytes
+        self.value = dbus.Array([subsystem_connection.type, subsystem_connection.cutoff1, subsystem_connection.cutoff2, subsystem_connection.belt], signature='ay')  # ay specifies an array of bytes
 
     # Handle read
     def ReadValue(self, options):
@@ -105,7 +107,7 @@ class WeightSensorReadCharacteristic(Characteristic):
         )
 
         # Initial value
-        self.value = [100, 100, 122]
+        self.value = [subsystem_connection.weight1, subsystem_connection.weight2, subsystem_connection.weight3]
 
     # Handle read
     def ReadValue(self, options):
