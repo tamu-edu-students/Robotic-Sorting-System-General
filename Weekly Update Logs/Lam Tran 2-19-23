@@ -1,0 +1,25 @@
+2/19
+Previous week, I worked on the Raspberry Pi and researching ML.
+
+I talked to Dr. Lusher if I could use a pre-trained model and said it's fine to use it.
+
+I tested my color/size sensors with the new test items and some fruits.
+The items that I used are pieces of plywood, painted with different colors and have different dimensions. 
+Some of the fruits that I tested were lime, lemon, tangerine, granny smith apple, banana, and eggplant.
+For the size sensor, there seems to be an around 10 percent increase in dimensions compared to the actual size for certain objects. 
+For other objects, there is a 5 percent increase.
+For the color sensor, all of the colors from the hue range worked ideally except for violet.
+For the violent/purple object, there seems to be a good amount of red and blue that the sensor measured.
+I tested and validated my color/size sensor, so I believe it is ready to be integrated to the other subsystems.
+For the size sensor, once we have an actual stand for the camera, I believe it will take more accurate and precise measurements.
+For the color sensor, I believe there are no citrus fruits that are violent/purple. 
+
+
+I tested my weight sensor with 3 load cells.
+First, I tested a load cell individually. Then I tested them simultaneously.
+The Raspberry Pi can take measurements from the 3 load cells simultaneously.
+I tested and validated my weight sensor, so I believe it is ready to be integrated to the other subsystems.
+
+My personal plan is to integrate ECEN 403's sensor subsystem with the other subsystems. 
+I will also follow this Tensorflow guide on Youtube ( https://www.youtube.com/watch?v=mNjXEybFn98&list=PLQY2H8rRoyvz_anznBg6y3VhuSMcpN9oe ) to set up a pre trained model to the raspberry pi and test it. 
+I will label my data images, and train the model with the new images. I will then test the model again with the raspberry pi.
