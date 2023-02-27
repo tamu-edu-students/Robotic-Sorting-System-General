@@ -1,0 +1,15 @@
+2/26
+
+I worked on the Raspberry Pi and the pre-trained model.
+I installed the pre-trained model to the Raspberry Pi.
+I tested the pre-trained model with a lemon and lime, the model detected it as an orange.
+I ordered a new ribbon cable for the Raspberry Pi camera.
+I installed Labelimg.
+I label some images.
+Me and Pace had a meeting with our sponsor to give him an update on our system.
+I researched how the pre-trained model works.
+
+My personal plan is to integrate ECEN 403's sensor subsystem with the other subsystems. I will also attend Blitz on Friday to meet with the others. 
+During the meeting with our sponsor, he recommend me to trained the model so that it could identify a single fruit first (lemon), then deploy it to the Raspberry Pi to test it.
+After that, I will train the model to detect defects of the fruit (black spots, mold, ect), and test it again. 
+If I could do this successfully, then I will train the model with another fruit,(maybe limes). 
