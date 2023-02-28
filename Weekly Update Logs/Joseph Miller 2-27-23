@@ -1,0 +1,4 @@
+This week, I've still been working on getting the Bluetooth server to update when the common variable file updates.
+I've had a lot of trouble trying to get this to work, but may have identified a solution and I'll be reaching out for help as well going into Blitz.
+
+Going forward, I'll try to resolve this issue and move forward with integration with other subsystems as they come online, especially during Blitz.
