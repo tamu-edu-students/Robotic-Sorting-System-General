@@ -3,8 +3,9 @@ import dbus.exceptions
 import dbus.mainloop.glib
 import dbus.service
 import logging
-import sensor_output # this is where the sensors and control systems put their output
-import time
+import subsystem_connection # this is where the sensors and control systems put their output
+import threading
+import importlib
 
 # Import classes from backend
 from RSSBLEBackend import (
@@ -14,7 +15,6 @@ from RSSBLEBackend import (
     Characteristic,
     Service
 )
-
 
 # Import MainLoop to manage system events
 MainLoop = None
@@ -71,8 +71,8 @@ class RSSService(Service):
     # Set initial values and add characteristics
     def __init__(self, bus, index):
         Service.__init__(self, bus, index, self.RSS_UUID, True)
-        self.add_characteristic(ConfigurationWriteCharacteristic(bus, 0, self))
-        self.add_characteristic(WeightSensorReadCharacteristic(bus, 1, self))
+        # self.add_characteristic(ConfigurationWriteCharacteristic(bus, 0, self))
+        # self.add_characteristic(WeightSensorReadCharacteristic(bus, 1, self))
 
 # Class for the configuration read/write characteristic
 class ConfigurationWriteCharacteristic(Characteristic):
@@ -84,7 +84,7 @@ class ConfigurationWriteCharacteristic(Characteristic):
         )
 
         # Initial value
-        self.value = dbus.Array([subsystem_connection.type, subsystem_connection.cutoff1, subsystem_connection.cutoff2, subsystem_connection.belt], signature='ay')  # ay specifies an array of bytes
+        self.value = dbus.Array([subsystem_connection.config[0], subsystem_connection.config[1], subsystem_connection.config[2], subsystem_connection.config[3]], signature='ay')  # ay specifies an array of bytes
 
     # Handle read
     def ReadValue(self, options):
@@ -106,13 +106,19 @@ class WeightSensorReadCharacteristic(Characteristic):
             self, bus, index, self.uuid, ["read"], service,  # Note that this is read-only
         )
 
-        # Initial value
-        self.value = [subsystem_connection.weight1, subsystem_connection.weight2, subsystem_connection.weight3]
 
     # Handle read
     def ReadValue(self, options):
         logger.debug("Weight read as: " + repr(self.value))
         return self.value
+        
+    # Handle write (from sensors)
+    def WriteValue(self):
+        importlib.reload(subsystem_connection)
+        writeval = dbus.Array([subsystem_connection.weight[0], subsystem_connection.weight[1], subsystem_connection.weight[2]], signature='ay')
+        logger.debug("Writing weight as: " + repr(writeval) + "(from sensors)")
+        self.value = writeval
+        
 
 # Class that defines the desired advertisement characteristics for the Robotic Sorting System
 class RSSAdvertisement(Advertisement):
@@ -124,6 +130,9 @@ class RSSAdvertisement(Advertisement):
         self.add_local_name("Robotic Sorting System")
         self.include_tx_power = True
 
+def updateCheck(character):
+    threading.Timer(5.0, updateCheck, [character]).start()
+    character.WriteValue()
 
 def main():
     logger.info("Entered main")
@@ -152,9 +161,14 @@ def main():
         reply_handler=register_app_cb,
         error_handler=register_app_error_cb
     )
-    # Create application and add service
+    # Create application and add service + characteristics
     app = Application(bus)
-    app.add_service(RSSService(bus, 2))
+    rssService = RSSService(bus, 2)  # Gives this instance of the service its own variable for later modification
+    weightChar = WeightSensorReadCharacteristic(bus, 0, rssService) # Same with characteristics
+    configChar = ConfigurationWriteCharacteristic(bus, 1, rssService)
+    rssService.add_characteristic(weightChar)
+    rssService.add_characteristic(configChar)
+    app.add_service(rssService) # Add the RSS service to the started application
     service_manager = dbus.Interface(adapter_obj, "org.bluez.GattManager1")
     service_manager.RegisterApplication(
         app.get_path(),
@@ -162,6 +176,8 @@ def main():
         reply_handler = register_app_cb,
         error_handler = [register_app_error_cb]
     )
+    # Check for updates
+    updateCheck(weightChar)
     # Tie into main loop
     mainloop = MainLoop()
     mainloop.run()
