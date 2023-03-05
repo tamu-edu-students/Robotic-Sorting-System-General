@@ -1,0 +1,25 @@
+3/5
+
+I worked on the Raspberry Pi and the machine learning model and also attended Blitz.
+I had many issues this week.
+I replaced the bent up ribbon cable with a new ribbon cable for the Raspberry Pi camera. 
+The video of the camera still has the blue filter on it even with the new ribbon cable.
+After experimenting with the code, the problem is fixed after I comment on 2 lines of codes.
+Another issue I had is running the ML model under a python virtual environment. 
+When I initially created the environment, it was able to run the model. This problem happened after I trained my custom model, and the environment wasn't able to run the model anymore. 
+I went to the Friday Blitz hoping to have it resolved, but me and two TA were not very successful.  
+The model was able to run if a virtual environment was not used, so this issue is solved by not using a virtual environment when running the model.
+Another issue I had is that my labeling program, "LabelImg", keeps getting errors. 
+When I first installed the labeling program, it was able to run and label images.
+This problem happens after I trained my first custom model, and the labeling program output errors. 
+After searching for some solutions on Google, the problem was fixed when I modified 2 lines of codes with "int" and "str".
+I managed to train a custom model that only detects lemons with Google colab. 
+I deployed it on the Raspberry Pi on Saturday Blitz. The result wasn't very good and I think this was due to the dataset I found being homogenous. 
+So I made my own dataset with my phone, a lemon, a lime, a tangerine, and a lemon bottle at the Blitz. I made over 200 images.
+After labeling the new images and training a new model, I did get better results with my second model.
+Me and Pace tried to integrate my weight sensors with his PCB. We connected the load cell, the PCB, and the Raspberry Pi together.
+ When we tested it, it produced some weird values. 
+We tried to troubleshoot and debug it, but the design was not working properly. 
+After that, I retested my weight sensor design. Initially, the reading would sometimes be zero even though there was force applied to the load cell. After removing some extra parts from the beardboards and rechecking the GPIO pins, it was working fine. Maybe the problems when trying to integrate were the Raspberry GPIO pins or that one of the components of the PCB was not working.
+
+My personal plan is to integrate my subsystem with the other subsystems, and to create a ML model that could detect certain defects of a lemon.  
