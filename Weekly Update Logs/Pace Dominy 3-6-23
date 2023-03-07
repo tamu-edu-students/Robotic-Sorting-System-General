@@ -1,0 +1,6 @@
+Conveyor belt frame finished
+Need to build guiding rails
+PCB motor controllers work with PSU attached
+Accidentaly fried some componenets when connecting PSU ground and power connectors backwards during the ecen design blitz.
+Ordered components to replace the ones that heated up or smoked
+Plan to fix PCB, finish conveyor belt and guiding rails and start integrating this week once board is fixed
