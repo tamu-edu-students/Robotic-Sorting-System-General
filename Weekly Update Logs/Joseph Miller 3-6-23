@@ -1,0 +1,2 @@
+This week I found a solution allowing the Bluetooth server to update from the subsystem connection file. However, I found a better solution that uses a JSON database file, so I've been working on implementing that.
+Going forward, I'll finish implementing the JSON database and work on integrating the other subsystems as soon as they're ready.
