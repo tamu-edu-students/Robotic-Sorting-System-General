@@ -3,6 +3,7 @@ import dbus.exceptions
 import dbus.mainloop.glib
 import dbus.service
 import logging
+import json # Used to interact with database storing common variables
 import subsystem_connection # this is where the sensors and control systems put their output
 import threading
 import importlib
@@ -71,8 +72,6 @@ class RSSService(Service):
     # Set initial values and add characteristics
     def __init__(self, bus, index):
         Service.__init__(self, bus, index, self.RSS_UUID, True)
-        # self.add_characteristic(ConfigurationWriteCharacteristic(bus, 0, self))
-        # self.add_characteristic(WeightSensorReadCharacteristic(bus, 1, self))
 
 # Class for the configuration read/write characteristic
 class ConfigurationWriteCharacteristic(Characteristic):
@@ -84,7 +83,8 @@ class ConfigurationWriteCharacteristic(Characteristic):
         )
 
         # Initial value
-        self.value = dbus.Array([subsystem_connection.config[0], subsystem_connection.config[1], subsystem_connection.config[2], subsystem_connection.config[3]], signature='ay')  # ay specifies an array of bytes
+        config = databaseLoad(1) # Configuration data
+        self.value = dbus.Array([config[0], config[1], config[2], config[3]], signature='ay')  # ay specifies an array of bytes
 
     # Handle read
     def ReadValue(self, options):
@@ -96,7 +96,8 @@ class ConfigurationWriteCharacteristic(Characteristic):
         writeval = dbus.Array(value, signature='ay')
         logger.debug("Writing configuration as: " + repr(writeval))
         self.value = writeval
-
+        # New configuration needs to be passed to the subsystem connection file
+        databaseWrite(value[0], value[1], value[2], value[3])
 
 class WeightSensorReadCharacteristic(Characteristic):
     uuid = "4f5641bf-1119-4d1f-932d-fff7840ddc02"
@@ -114,8 +115,9 @@ class WeightSensorReadCharacteristic(Characteristic):
         
     # Handle write (from sensors)
     def WriteValue(self):
-        importlib.reload(subsystem_connection)
-        writeval = dbus.Array([subsystem_connection.weight[0], subsystem_connection.weight[1], subsystem_connection.weight[2]], signature='ay')
+        # importlib.reload(subsystem_connection)
+        weight = databaseLoad(0)
+        writeval = dbus.Array([weight[0], weight[1], weight[2]], signature='ay')
         logger.debug("Writing weight as: " + repr(writeval) + "(from sensors)")
         self.value = writeval
         
@@ -133,6 +135,38 @@ class RSSAdvertisement(Advertisement):
 def updateCheck(character):
     threading.Timer(5.0, updateCheck, [character]).start()
     character.WriteValue()
+
+def databaseLoad(information):
+    with open ("subsystem_connection.json", "r") as f:
+        subsystem_connection = json.load(f)
+    
+    if (information == 0): # Weight data
+        weight1 = subsystem_connection["weight1"]
+        weight2 = subsystem_connection["weight2"]
+        weight3 = subsystem_connection["weight3"]
+        array = [weight1, weight2, weight3]
+        return array
+    elif (information == 1): # Configuration data
+        ctype = subsystem_connection["ctype"]
+        cutoff1 = subsystem_connection["cutoff1"]
+        cutoff2 = subsystem_connection["cutoff2"]
+        belt = subsystem_connection["belt"]
+        array = [ctype, cutoff1, cutoff2, belt]
+        return array
+    else:
+        return 1
+        
+def databaseWrite(ctype, cutoff1, cutoff2, belt): # Only for configuration
+     with open ("subsystem_connection.json", "r") as f:
+         subsystem_connection = json.load(f)
+     
+     subsystem_connection["ctype"] = ctype
+     subsystem_connection["cutoff1"] = cutoff1
+     subsystem_connection["cutoff2"] = cutoff2
+     subsystem_connection["belt"] = belt
+     
+     with open("subsystem_connection.json", "w") as f:
+         json.dump(subsystem_connection, f)
 
 def main():
     logger.info("Entered main")
