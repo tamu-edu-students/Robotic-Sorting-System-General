@@ -1,6 +1,25 @@
 import RPi.GPIO as GPIO # import global input and output library for raspberry pi
 import time
 GPIO.setmode(GPIO.BCM) # set pins to board pin layout
+import threading
+import json
+
+databaseArray = []
+
+def updateCheck():
+    threading.Timer(5.0, updateCheck).start()
+    databaseArray = databaseLoad()
+
+def databaseLoad():
+    with open ("subsystem_connection.json", "r") as f:
+        subsystem_connection = json.load(f)
+    ctype = subsystem_connection["ctype"]
+    cutoff1 = subsystem_connection["cutoff1"]
+    cutoff2 = subsystem_connection["cutoff2"]
+    belt = subsystem_connection["belt"]
+    fruit =  subsystem_connection["fruit"]
+    array = [ctype, cutoff1, cutoff2, belt, fruit]
+    return array
 
 # connveyor belt inputs
 input_1 = 12 # Raspberry Pi 4 PWM0, pin 12
@@ -29,73 +48,73 @@ GA_frequency = 30000 # input("Freq. b/w 20k and 100k: ")
 currentBin = 1 # set initial position to 1 (middle...0 is left and 2 is right)
 
 # ----------------------------------------------------------------------------------------------------------------
+while(databaseArray[3] == 1): # master on off from database (json) file
+    nextBin = databaseArray[4] # grab bin location from database
 
-nextBin = 0 # test value to test input
-
-if (nextBin == 0):
-    if (currentBin == 1): 
-        GA_direction = 'Backward'
-        GPIO.output(input_3, False)
-        GA_pwm = GPIO.PWM(input_4, GA_frequency)
-        GA_pwm.start(GA_duty_cycle)
-        time.sleep(5) # moves for 5 seconds
-        GA_pwm.stop()
-        currentBin = nextBin # set location to bin it moved to
-    elif (currentBin == 2):
-        GA_direction = 'Backward'
-        GPIO.output(input_3, False)
-        GA_pwm = GPIO.PWM(input_4, GA_frequency)
-        GA_pwm.start(GA_duty_cycle)
-        time.sleep(10) # moves for 10 seconds
-        GA_pwm.stop()
-        currentBin = nextBin
-    elif (currentBin == 0): 
-        # do nothing.  Guiding rails already at correct position
-        currentBin = nextBin
+    if (nextBin == 0):
+        if (currentBin == 1): 
+            GA_direction = 'Backward'
+            GPIO.output(input_3, False)
+            GA_pwm = GPIO.PWM(input_4, GA_frequency)
+            GA_pwm.start(GA_duty_cycle)
+            time.sleep(5) # moves for 5 seconds
+            GA_pwm.stop()
+            currentBin = nextBin # set location to bin it moved to
+        elif (currentBin == 2):
+            GA_direction = 'Backward'
+            GPIO.output(input_3, False)
+            GA_pwm = GPIO.PWM(input_4, GA_frequency)
+            GA_pwm.start(GA_duty_cycle)
+            time.sleep(10) # moves for 10 seconds
+            GA_pwm.stop()
+            currentBin = nextBin
+        elif (currentBin == 0): 
+            # do nothing.  Guiding rails already at correct position
+            currentBin = nextBin
+        else:
+            print("ERROR: INVALID CURRENT BIN")
+    elif (nextBin == 1):
+        if (currentBin == 0):
+            GA_direction = 'Forward'
+            GPIO.output(input_4, False)
+            GA_pwm = GPIO.PWM(input_3, GA_frequency)
+            GA_pwm.start(GA_duty_cycle)
+            time.sleep(5) # moves for 5 seconds
+            GA_pwm.stop()
+            currentBin = nextBin
+        elif (currentBin == 2):
+            GA_direction = 'Backward'
+            GPIO.output(input_3, False)
+            GA_pwm = GPIO.PWM(input_4, GA_frequency)
+            GA_pwm.start(GA_duty_cycle)
+            time.sleep(5) # moves for 5 seconds
+            GA_pwm.stop()
+            currentBin = nextBin
+        elif (currentBin == 1):
+            # do nothing.  Guiding rails already at correct position
+            currentBin = nextBin
+        else:
+            print("ERROR: INVALID CURRENT BIN")
+    elif (nextBin == 2):
+        if (currentBin == 0): 
+            GA_direction = 'Forward'
+            GPIO.output(input_4, False)
+            GA_pwm = GPIO.PWM(input_3, GA_frequency)
+            GA_pwm.start(GA_duty_cycle)
+            time.sleep(5) # moves for 5 seconds
+            GA_pwm.stop()
+            currentBin = nextBin
+        elif (currentBin == 1):
+            GA_direction = 'Forward'
+            GPIO.output(input_4, False)
+            GA_pwm = GPIO.PWM(input_3, GA_frequency)
+            GA_pwm.start(GA_duty_cycle)
+            time.sleep(5) # moves for 10 seconds
+            GA_pwm.stop()
+        elif (currentBin == 2):
+            # do nothing.  Guiding rails already at correct position
+            currentBin = nextBin
+        else:
+            print("ERROR: INVALID CURRENT BIN")
     else:
-        print("ERROR: INVALID CURRENT BIN")
-elif (nextBin == 1):
-    if (currentBin == 0):
-        GA_direction = 'Forward'
-        GPIO.output(input_4, False)
-        GA_pwm = GPIO.PWM(input_3, GA_frequency)
-        GA_pwm.start(GA_duty_cycle)
-        time.sleep(5) # moves for 5 seconds
-        GA_pwm.stop()
-        currentBin = nextBin
-    elif (currentBin == 2):
-        GA_direction = 'Backward'
-        GPIO.output(input_3, False)
-        GA_pwm = GPIO.PWM(input_4, GA_frequency)
-        GA_pwm.start(GA_duty_cycle)
-        time.sleep(5) # moves for 5 seconds
-        GA_pwm.stop()
-        currentBin = nextBin
-    elif (currentBin == 1):
-        # do nothing.  Guiding rails already at correct position
-        currentBin = nextBin
-    else:
-        print("ERROR: INVALID CURRENT BIN")
-elif (nextBin == 2):
-    if (currentBin == 0): 
-        GA_direction = 'Forward'
-        GPIO.output(input_4, False)
-        GA_pwm = GPIO.PWM(input_3, GA_frequency)
-        GA_pwm.start(GA_duty_cycle)
-        time.sleep(5) # moves for 5 seconds
-        GA_pwm.stop()
-        currentBin = nextBin
-    elif (currentBin == 1):
-        GA_direction = 'Forward'
-        GPIO.output(input_4, False)
-        GA_pwm = GPIO.PWM(input_3, GA_frequency)
-        GA_pwm.start(GA_duty_cycle)
-        time.sleep(5) # moves for 10 seconds
-        GA_pwm.stop()
-    elif (currentBin == 2):
-        # do nothing.  Guiding rails already at correct position
-        currentBin = nextBin
-    else:
-        print("ERROR: INVALID CURRENT BIN")
-else:
-    print("ERROR: Invalid bin input")
+        print("ERROR: Invalid bin input")
