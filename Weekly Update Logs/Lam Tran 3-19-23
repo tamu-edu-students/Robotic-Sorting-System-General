@@ -1,0 +1,14 @@
+3/19
+
+I worked on labeling some images of lemon with their defects.
+I took pictures of the bad lemons that HEB that they were gonna throw away and labeled them.
+I trained some models and tested them. The model that I tested was not able to detect the defects of the lemons.
+I worked with Pace to integrate my weight sensor design with his PCB. Previously, we had trouble having a certain load cell to output expected results. The other two load cells worked fine, but the first one is just outputting weird readings. We tried using channel 3 of the ADC, but it's still not working as we want it to be.
+I was training a model, and my Google Colab crashed during that session. This might be due to the gpu usage limit and using up all of my compute units.
+I started to integrate my weight sensor and color/size sensor code with Joseph's subsystem via JSON file.
+
+My personal plan for this week.
+Buy a subscription to Google Colab Pro, or find an alternate way to train my models.
+Create and test multiple models with varying hyperparameters, model architecture, labels, and dataset to create a decent model.
+Integrate with Joseph's subsystem, and test it.
+Retest my weight sensor design to figure out what is wrong with the output reading when integrating with Pace's PCB. 
