@@ -1,0 +1,5 @@
+Conveyor belt built but belt not tensioning enough to get lemon over rollers
+Guiding arm pulley works just need to connect arms
+Motor controller code takes input from database that app and sensors use...when the database updates it checks to see if it needs to move or not and takes action.
+Load cells connect with PCB and Raspberry Pi and work
+Need to fix belt tensioning issue...connect guiding arms asap...make bins for load cells...wire everything together permanently
