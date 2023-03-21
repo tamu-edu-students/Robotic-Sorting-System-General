@@ -1,0 +1,2 @@
+This week, we were able to get all of the subsystems writing to and reading from the same file, effectively allowing them to talk to each other. I also helped a bit with fabricating the mechanical aspects of the project.
+I'm concerned about our progress on integration, especially since we're sinking so much effort into machine learning, but we've started talking to Dr. Lusher to help find a way forward.
