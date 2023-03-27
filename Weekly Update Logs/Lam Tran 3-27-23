@@ -1,0 +1,15 @@
+3/26
+
+I worked on mostly integration for this week.
+My team and I emailed Dr. Lusher about my struggle to create a working model, other problems and what to do next. He emailed back telling us to focus on integrations. Once finished with that, I could continue working on ML.
+I retested my weight sensor on the breadboard to see if my code and design still work.
+I reprogrammed my size sensor code to update Joseph's JSON file
+I helped to wire up the Pace's conveyor system to the load cells and Raspberry Pi.
+I tested my weight sensor on Pace's PCB. It still has some weird readings, but me and Pace talked about some solutions to make the system work with the weird readings.
+I programmed my color/size code to work with the Pace's black conveyor belt. I may have found a way to filter out bright spots and uneven lighting. 
+
+
+My personal plan for this week.
+Finish with integration of our subsystems. Like error value or testing the camera on the conveyor, ect.
+Finish with system validations.
+Create a new machine learning model, with "good lemon" and "bad lemon" as the labels.
