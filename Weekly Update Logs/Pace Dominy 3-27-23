@@ -1,0 +1,5 @@
+Got new 3D printed part for the pulley system (that connects to the guiding rails)
+Tested new configuration for guiding rails
+Fiddled with mechanical side of guiding rails and also tuned the timing of the arm movements
+Plan to fix belt on 3/30/23 or 3/31/23 when we get the rubber sheets from Home Depot
+Most of the PCB works but the Raspberry Pi Power section of the board looks good but does not work (getting 50 mV not 5V).  My best guess is that there is a short somewhere because the design looks good and the soldering looks good
