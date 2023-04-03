@@ -1,0 +1,12 @@
+4/3
+
+I worked on mostly integration, validating the integration, and some on ML.
+One thing I worked on is sensor error detection.
+I listed out some situations where the reading from the sensors can lead to incorrecting measurements. Like having a lemon on the edge of the frame, having 2 or more lemon on the frame, ect. I implement a way to determine these situations. 
+I also did some integration and validating the integration of my color/size sensor with the conveyor belt. Like determining the pixels per inch, validating if the code filters out the background, and testing with a lemon to see if it makes accurate color and size measurement.
+I did label some of my dataset using "Good lemon" and "Bad lemon" labels and bought a subscription to Google Colab Pro.
+
+My personal plan for this week
+Finish with system validations.
+Have a finished working system by the end of the week.
+Train the model, test/validate the model, and if I have time, integrate the model with the system.
