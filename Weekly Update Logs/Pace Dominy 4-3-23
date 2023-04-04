@@ -1,0 +1,4 @@
+With help of Dr Lusher fixed PCB and got output voltage of 4.6V for Raspberry Pi buck converter.  
+Voltage divider is wrong and ordered replacement resistor that is 220k Ohms instead of 200k ohms
+Tension issue on conveyor belt was fixed by putting cardboard layer on top of rollers and under the belt (only the roller being moved by the motor spins)
+Frame of system was spray painted
