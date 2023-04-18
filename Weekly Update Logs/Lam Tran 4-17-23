@@ -1,0 +1,6 @@
+4/17
+I worked on integration mostly.
+I have modified my codes so that they update the JSON and run on a forever while loop.I also debug and test my color/size sensor code, so that it could account for an image with no object.I also tested my integrated weight sensor code with the conveyor belt, and it seems to output values that are 100-300 even though there is no load applied to it. It seems to have trouble with taking a reading for when replacing an array's value with new readings.I fixed this issue reverving to my old code, with a new value added to the array one at a time. It's not perfect, so if I have the time I will try to make improvements to this codeI also made my weight sensor code to update the JSON only with integers from 0 to 255.I watched Pace try to make a bash script to have the codes and JSON file to run, but it seems that we have a problem of being unable to kill the script.
+My personal plan for this week.Maybe do some testing on my integrated code to see if it has some flaws or any improvements could be made.Calibrate the weight sensor, so that it could output an actual weight unit like Kg.
+Meet up with the team to fix any issue and finish this project.Finish with system validations.
+Have a finished working system by the end of the week.
