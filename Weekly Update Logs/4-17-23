@@ -1,0 +1,6 @@
+At current stage of the project just fixing any problems with code integration
+Cleaned up wiring
+Tuned guiding rail timing but the conveyor belt gets moved around everytime its put in the cage
+Hopefully do not have to retune timing or reposition starting point of rails everytime it is stored in the cage
+Wrote a bash file to run all the python files but didnt work and created a virus (always runs in the background)
+Created a python file to run all the python files needed for the project just need to test it
