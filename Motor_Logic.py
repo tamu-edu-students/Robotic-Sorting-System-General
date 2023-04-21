@@ -44,29 +44,34 @@ def motorlogic(in1, in2, in3, in4, dc_c, f_c, dc_g, f_g, databaseArray):
 				GPIO.output(in3, False)
 				GA_pwm = GPIO.PWM(in4, f_g)
 				GA_pwm.start(dc_g)
-				time.sleep(1) # moves for set amount of seconds
+				time.sleep(0.2) # moves for set amount of seconds
 				GA_pwm.stop()
 				# cb = nextBin # set location to bin it moved to
 				currentBin = nextBin
 				
 				Conveyor_pwm.start(dc_c)
-				time.sleep(5)
+				time.sleep(30)
 				Conveyor_pwm.stop()
+				time.sleep(0.2) # make all if statements same amount of time
 			elif (currentBin == 2):
 				GA_direction = 'Backward'
 				GPIO.output(in3, False)
 				GA_pwm = GPIO.PWM(in4, f_g)
 				GA_pwm.start(dc_g)
-				time.sleep(2)
+				time.sleep(0.4)
 				GA_pwm.stop()
 				currentBin = nextBin
 				
 				Conveyor_pwm.start(dc_c)
-				time.sleep(5)
+				time.sleep(30)
 				Conveyor_pwm.stop()
 			elif (currentBin == 0): 
-				# do nothing.  Guiding rails already at correct position
+				# do nothing.  Guiding rails already at correct position.  Only move conveyor
 				currentBin = nextBin
+				Conveyor_pwm.start(dc_c)
+				time.sleep(30)
+				Conveyor_pwm.stop()
+				time.sleep(0.4)
 			else:
 				print("ERROR: INVALID CURRENT BIN")
 		elif (nextBin == 1):
@@ -75,28 +80,34 @@ def motorlogic(in1, in2, in3, in4, dc_c, f_c, dc_g, f_g, databaseArray):
 				GPIO.output(in4, False)
 				GA_pwm = GPIO.PWM(in3, f_g)
 				GA_pwm.start(dc_g)
-				time.sleep(1)
+				time.sleep(0.2)
 				GA_pwm.stop()
 				currentBin = nextBin
 				
 				Conveyor_pwm.start(dc_c)
-				time.sleep(5)
+				time.sleep(30)
 				Conveyor_pwm.stop()
+				time.sleep(0.2)
 			elif (currentBin == 2):
 				GA_direction = 'Backward'
 				GPIO.output(in3, False)
 				GA_pwm = GPIO.PWM(in4, f_g)
 				GA_pwm.start(dc_g)
-				time.sleep(2)
+				time.sleep(0.2)
 				GA_pwm.stop()
 				currentBin = nextBin
 				
 				Conveyor_pwm.start(dc_c)
-				time.sleep(5)
+				time.sleep(30)
 				Conveyor_pwm.stop()
+				time.sleep(0.2)
 			elif (currentBin == 1):
 				# do nothing.  Guiding rails already at correct position
 				currentBin = nextBin
+				Conveyor_pwm.start(dc_c)
+				time.sleep(30)
+				Conveyor_pwm.stop()
+				time.sleep(0.4)
 			else:
 				print("ERROR: INVALID CURRENT BIN")
 		elif (nextBin == 2):
@@ -105,28 +116,33 @@ def motorlogic(in1, in2, in3, in4, dc_c, f_c, dc_g, f_g, databaseArray):
 				GPIO.output(in4, False)
 				GA_pwm = GPIO.PWM(in3, f_g)
 				GA_pwm.start(dc_g)
-				time.sleep(1)
+				time.sleep(0.4)
 				GA_pwm.stop()
 				currentBin = nextBin
 				
 				Conveyor_pwm.start(dc_c)
-				time.sleep(5)
+				time.sleep(30)
 				Conveyor_pwm.stop()
 			elif (currentBin == 1):
 				GA_direction = 'Forward'
 				GPIO.output(in4, False)
 				GA_pwm = GPIO.PWM(in3, f_g)
 				GA_pwm.start(dc_g)
-				time.sleep(2)
+				time.sleep(0.2)
 				GA_pwm.stop()
 				currentBin = nextBin
 				
 				Conveyor_pwm.start(dc_c)
-				time.sleep(5)
+				time.sleep(30)
 				Conveyor_pwm.stop()
+				time.sleep(0.2)
 			elif (currentBin == 2):
 				# do nothing.  Guiding rails already at correct position
 				currentBin = nextBin
+				Conveyor_pwm.start(dc_c)
+				time.sleep(30)
+				Conveyor_pwm.stop()
+				time.sleep(0.4)
 			else:
 				print("ERROR: INVALID CURRENT BIN")
 		else:
@@ -137,14 +153,14 @@ def main():
 	input_1 = 12 # Raspberry Pi 4 PWM0, pin 12
 	input_2 = 18 # PWM0 pin 18 
 
-	GPIO.setup(input_1, GPIO.OUT) # setup pin 12 as output
-	GPIO.setup(input_2, GPIO.OUT) # setup pin 18 as output
+	# GPIO.setup(input_1, GPIO.OUT) # setup pin 12 as output # DONE IN FUNCTION.
+	# GPIO.setup(input_2, GPIO.OUT) # setup pin 18 as output
 	# guiding arm inputs
 	input_3 = 13 # PWM1, pin 13
 	input_4 = 19 # PWM1, pin 19
 
-	GPIO.setup(input_3, GPIO.OUT) # setup pin 13 as output
-	GPIO.setup(input_4, GPIO.OUT) # setup pin 19 as output
+	# GPIO.setup(input_3, GPIO.OUT) # setup pin 13 as output
+	# GPIO.setup(input_4, GPIO.OUT) # setup pin 19 as output
 
 	# conveyor belt values will be constant
 	# Conveyor_direction = 'Backward'
