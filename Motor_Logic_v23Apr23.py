@@ -5,11 +5,11 @@ import threading
 import json
 
 databaseArray = [0, 0, 0, 1, 0]
-currentBin = 1
+currentBin = 0
 
 def updateCheck(Conveyor_pwm, GA_left_pwm, GA_right_pwm, dc_c, dc_g):
 	global databaseArray
-	threading.Timer(31.0, updateCheck, [Conveyor_pwm, GA_left_pwm, GA_right_pwm, dc_c, dc_g]).start()
+	threading.Timer(61.0, updateCheck, [Conveyor_pwm, GA_left_pwm, GA_right_pwm, dc_c, dc_g]).start()
 	databaseArray = databaseLoad()
 	# print("Updated database array")
 	# print(databaseArray)
@@ -36,7 +36,7 @@ def motorlogic(Conveyor_pwm, GA_left_pwm, GA_right_pwm, dc_c, dc_g):
 		
 		# ctype is 3 for ML.  1 for good, 2 for bad
 		# ctype is 1 for size.  1 for small, 2 for medium, 3 for large
-		# ctype is 2 for color.  base it off cutoffs.  bin 1: less than or equal to cutoff 1.  bin 2: b/w cutoffs.  bin 3: greater than or equal to cutoff 2
+		# ctype is 2 for color.  base it off cutoffs.  bin 1: less than or equal to cutoff 1.  bin 2: b/w cutoffs.  bin 3: greater than cutoff 2
 		
 		# print(databaseArray)
 		
@@ -46,14 +46,24 @@ def motorlogic(Conveyor_pwm, GA_left_pwm, GA_right_pwm, dc_c, dc_g):
 		ctype = databaseArray[0]
 		
 		if (ctype == 1 or ctype == 2): # color or size sorting
-			if (fruit <= c1):
-				nextBin = 0
-			elif (fruit > c1 and fruit < c2):
-				nextBin = 1
-			elif (fruit >= c2):
-				nextBin = 2
-			else:
-				print("Error with cutoffs")
+			if (c2 > c1):
+				if (fruit <= c1):
+					nextBin = 0
+				elif (fruit > c1 and fruit <= c2):
+					nextBin = 1
+				elif (fruit > c2):
+					nextBin = 2
+				else:
+					print("Error with cutoffs")
+			elif (c1 > c2):
+				if (fruit <= c2):
+					nextBin = 0
+				elif (fruit > c2 and fruit <= c1):
+					nextBin = 1
+				elif (fruit > c1):
+					nextBin = 2
+				else:
+					print("Error with cutoffs")
 		elif (ctype == 3):
 			if (fruit == 1):
 				nextBin = 0
@@ -78,32 +88,32 @@ def motorlogic(Conveyor_pwm, GA_left_pwm, GA_right_pwm, dc_c, dc_g):
 				GA_direction = 'Backward'
 				# GPIO.output(in3, False)
 				# GA_pwm = GPIO.PWM(in4, f_g)
-				GA_right_pwm.start(dc_g)
-				time.sleep(0.3) # moves for set amount of seconds
+				GA_right_pwm.start(100)
+				time.sleep(0.55) # moves for set amount of seconds
 				GA_right_pwm.stop()
 				# cb = nextBin # set location to bin it moved to
 				currentBin = nextBin
 				
-				Conveyor_pwm.start(dc_c)
-				time.sleep(30)
+				Conveyor_pwm.start(100)
+				time.sleep(60)
 				Conveyor_pwm.stop()
 			elif (currentBin == 2):
 				GA_direction = 'Backward'
 				# GPIO.output(in3, False)
 				# GA_pwm = GPIO.PWM(in4, f_g)
-				GA_right_pwm.start(dc_g)
-				time.sleep(0.4)
+				GA_right_pwm.start(100)
+				time.sleep(0.5)
 				GA_right_pwm.stop()
 				currentBin = nextBin
 				
-				Conveyor_pwm.start(dc_c)
-				time.sleep(30)
+				Conveyor_pwm.start(100)
+				time.sleep(60)
 				Conveyor_pwm.stop()
 			elif (currentBin == 0): 
 				# do nothing.  Guiding rails already at correct position
 				currentBin = nextBin
-				Conveyor_pwm.start(dc_c)
-				time.sleep(30)
+				Conveyor_pwm.start(100)
+				time.sleep(60)
 				Conveyor_pwm.stop()
 			else:
 				print("ERROR: INVALID CURRENT BIN")
@@ -112,31 +122,31 @@ def motorlogic(Conveyor_pwm, GA_left_pwm, GA_right_pwm, dc_c, dc_g):
 				GA_direction = 'Forward'
 				# GPIO.output(in4, False)
 				# GA_pwm = GPIO.PWM(in3, f_g)
-				GA_left_pwm.start(dc_g)
-				time.sleep(0.2)
+				GA_left_pwm.start(100)
+				time.sleep(0.25)
 				GA_left_pwm.stop()
 				currentBin = nextBin
 				
-				Conveyor_pwm.start(dc_c)
-				time.sleep(30)
+				Conveyor_pwm.start(100)
+				time.sleep(60)
 				Conveyor_pwm.stop()
 			elif (currentBin == 2):
 				GA_direction = 'Backward'
 				# GPIO.output(in3, False)
 				# GA_pwm = GPIO.PWM(in4, f_g)
-				GA_right_pwm.start(dc_g)
-				time.sleep(0.2)
+				GA_right_pwm.start(100)
+				time.sleep(0.25)
 				GA_right_pwm.stop()
 				currentBin = nextBin
 				
-				Conveyor_pwm.start(dc_c)
-				time.sleep(30)
+				Conveyor_pwm.start(100)
+				time.sleep(60)
 				Conveyor_pwm.stop()
 			elif (currentBin == 1):
 				# do nothing.  Guiding rails already at correct position
 				currentBin = nextBin
-				Conveyor_pwm.start(dc_c) # why wont this run?
-				time.sleep(30)
+				Conveyor_pwm.start(100) # why wont this run?
+				time.sleep(60)
 				Conveyor_pwm.stop()
 			else:
 				print("ERROR: INVALID CURRENT BIN")
@@ -145,31 +155,31 @@ def motorlogic(Conveyor_pwm, GA_left_pwm, GA_right_pwm, dc_c, dc_g):
 				GA_direction = 'Forward'
 				# GPIO.output(in4, False)
 				# GA_pwm = GPIO.PWM(in3, f_g)
-				GA_left_pwm.start(dc_g)
-				time.sleep(0.4)
+				GA_left_pwm.start(100)
+				time.sleep(0.5)
 				GA_left_pwm.stop()
 				currentBin = nextBin
 				
-				Conveyor_pwm.start(dc_c)
-				time.sleep(30)
+				Conveyor_pwm.start(100)
+				time.sleep(60)
 				Conveyor_pwm.stop()
 			elif (currentBin == 1):
 				GA_direction = 'Forward'
 				# GPIO.output(in4, False)
 				#GA_left_pwm = GPIO.PWM(in3, f_g)
-				GA_left_pwm.start(dc_g)
-				time.sleep(0.2)
+				GA_left_pwm.start(100)
+				time.sleep(0.25)
 				GA_left_pwm.stop()
 				currentBin = nextBin
 				
-				Conveyor_pwm.start(dc_c)
-				time.sleep(30)
+				Conveyor_pwm.start(100)
+				time.sleep(60)
 				Conveyor_pwm.stop()
 			elif (currentBin == 2):
 				# do nothing.  Guiding rails already at correct position
 				currentBin = nextBin
-				Conveyor_pwm.start(dc_c)
-				time.sleep(30)
+				Conveyor_pwm.start(100)
+				time.sleep(60)
 				Conveyor_pwm.stop()
 			else:
 				print("ERROR: INVALID CURRENT BIN")
