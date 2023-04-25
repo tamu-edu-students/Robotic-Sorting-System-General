@@ -1,0 +1,14 @@
+4/24
+
+My team and I worked on integration mostly. I also collected some data for my weight sensor.
+I tested and collected data that was used to convert the ADC unit to grams of the weight sensor. 
+Somehow, I accidentally fried the Raspberry Pi while I was testing it.
+A TA was there and told me that I could borrow another Raspberry Pi from Wisebaker.
+Once I got the new Raspberry Pi, I tested to see if the micro SD still works. It still works, so our files are still there.
+We tried to use multithreading to have our python scripts run simultaneously, but it seems to only run the color/size sensor code only. 
+For the demo, we ended up running each of our code one at a time.
+
+My personal plan for this week. 
+Work on my part on the poster.
+Present our Robotic Sorting System during the Engineering Project Showcase.
+Work on the Final report
